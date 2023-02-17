@@ -25,6 +25,7 @@ class Data:
             self.df = pd.read_excel(datafilepath, **kwargs)
         elif datafilesuffix == "csv":
             self.df = pd.read_csv(datafilepath, **kwargs)
+
         return self.df
 
     def output_data(self, outfile, **kwargs):
@@ -39,9 +40,16 @@ class Data:
 
 
 def deal_nans_int(dataframe, columns):
+    """
+    Replace NaNs with zero and convert the datatype for int objects in dataframe.
+    :param dataframe: df
+    :param columns: list of column names, specifying the columns that should be modified
+    :return: df
+    """
     for column in columns:
         dataframe[column] = dataframe[column].replace(np.NaN, 0)
         dataframe[column] = dataframe[column].astype(int)
+
     return dataframe
 
 
@@ -230,5 +238,6 @@ def data_process():
     df_all_data = Data("covid_usa_all_data.csv")
     df_all_data.df = df_all.copy()
     df_all_data.output_data("covid_usa_all_data.csv")
+
     return df_all_data
 
